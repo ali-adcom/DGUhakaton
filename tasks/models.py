@@ -48,7 +48,7 @@ class TaskReportFile(models.Model):
     file_url = models.CharField(max_length=256, verbose_name='URL к файлу')
 
     def __str__(self):
-        return f"Image for {self.task} by {self.user.username}"
+        return f"Report file for {self.task} by {self.user.username}"
     
     class Meta:
         verbose_name = 'Файл отчета по задаче'
