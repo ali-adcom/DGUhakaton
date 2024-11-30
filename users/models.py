@@ -32,9 +32,11 @@ class User(AbstractBaseUser):
     last_name = models.CharField(max_length=64, verbose_name='Фамилия')
     email = models.EmailField(max_length=256, verbose_name='E-mail')
     kind = models.CharField(max_length=3, choices=KIND_CHOICES, null=True, verbose_name='Тип')
-    family = models.ForeignKey(Family, on_delete=models.SET_NULL, null=True, blank=True, related_name='members', verbose_name='Семья')
+    family = models.ForeignKey(
+        Family, on_delete=models.SET_NULL, null=True, blank=True, related_name='members', verbose_name='Семья'
+    )
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES, verbose_name='Пол')
-    age = models.SmallIntegerField(verbose_name='Возвраст')
+    age = models.SmallIntegerField(verbose_name='Возраст')
     
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
