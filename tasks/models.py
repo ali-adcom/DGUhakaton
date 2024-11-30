@@ -28,11 +28,11 @@ class Task(models.Model):
     complexity = models.IntegerField(choices=COMPLEXITY_CHOICES, verbose_name='Сложность задачи')
     scope = models.CharField(max_length=20, choices=SCOPE_CHOICES, verbose_name='Область видимости')
     family = models.ForeignKey(Family, on_delete=models.CASCADE, verbose_name='Семья')
-    is_completed = models.BooleanField(default=False, verbose_name='Завершено')
+    is_completed = models.BooleanField(default=False, verbose_name='Завершено?')
     recommend_time_in_min = models.SmallIntegerField(verbose_name='Рекомендуемое время в минутах')
     created_datetime = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     closed_datetime = models.DateTimeField(null=True, blank=True, verbose_name='Дата завершения')
-    closed_by = models.ForeignKey(User, null=True, blank=True, verbose_name='Кто закрыл')
+    closed_by = models.ForeignKey(User, null=True, blank=True, verbose_name='Кем закрыта')
 
     def __str__(self):
         return self.title
@@ -43,15 +43,18 @@ class Task(models.Model):
         ordering = ['-created_datetime']
 
 
-class TaskImages(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='task_images/')
+class TaskReportFile(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='report_files', verbose_name='Пользователь'
+    )
+    task = models.ForeignKey(
+        Task, on_delete=models.CASCADE, related_name='report_files', verbose_name='Задача'
+    )
+    file_url = models.CharField()
 
     def __str__(self):
-        return f"Image for {self.task.title} by {self.user.username}"
+        return f"Image for {self.task} by {self.user.username}"
     
     class Meta:
-        verbose_name = 'Изображение задачи'
-        verbose_name_plural = 'Изображения задач'
-        ordering = ['-id']
+        verbose_name = 'Файл отчета по задаче'
+        verbose_name_plural = 'Файлы отчетов по задачам'
