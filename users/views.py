@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -79,3 +79,8 @@ class UserViewSet(
             return Response(
                 'Возникла ошибка при создании/получении пользователя', status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+    @action(detail=False, methods=['POST'], url_path='auth/logout')
+    def login_user(self, request, *args, **kwargs):
+        logout(request)
+        return Response('Успешно')
