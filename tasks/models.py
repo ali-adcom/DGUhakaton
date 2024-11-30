@@ -32,7 +32,7 @@ class Task(models.Model):
     recommend_time_in_min = models.SmallIntegerField(verbose_name='Рекомендуемое время в минутах')
     created_datetime = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     closed_datetime = models.DateTimeField(null=True, blank=True, verbose_name='Дата завершения')
-    closed_by = models.ForeignKey(User, null=True, blank=True, verbose_name='Кем завершено')
+    closed_by = models.ForeignKey(User, null=True, blank=True, verbose_name='Кем завершена')
 
     def __str__(self):
         return self.title
@@ -48,8 +48,8 @@ class TaskReportFile(models.Model):
     file_url = models.CharField(max_length=256, verbose_name='URL к файлу')
 
     def __str__(self):
-        return f"Image for {self.task.title} by {self.user.username}"
+        return f"Image for {self.task} by {self.user.username}"
     
     class Meta:
-        verbose_name = 'Изображение задачи'
-        verbose_name_plural = 'Изображения задач'
+        verbose_name = 'Файл отчета по задаче'
+        verbose_name_plural = 'Файлы отчетов по задачам'
