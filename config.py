@@ -1,0 +1,2 @@
+OTP_TTL_IN_SEC = 10 * 60
+OTP_LENGTH = 6

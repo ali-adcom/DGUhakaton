@@ -5,8 +5,8 @@ from users.models import User, Family
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'first_name', 'last_name', 'kind', 'family', 'invite_code')
-    list_filter = ('kind', 'family')
+    list_display = ('first_name', 'last_name', 'role', 'family')
+    list_filter = ('role', 'family')
     search_fields = ('username', 'first_name', 'last_name', 'family__title')
 
 
