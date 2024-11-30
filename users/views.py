@@ -42,10 +42,10 @@ class UserViewSet(
 
         return Response(f'otp успешно отправлен {otp}')
 
-    @action(detail=False, methods=['POST'], url_path='auth/sign-up', serializer_class=UserSignUpSerializer)
-    def sign_up(self, request, *args, **kwargs):
+    @action(detail=False, methods=['POST'], url_path='auth/login', serializer_class=UserSignUpSerializer)
+    def login_user(self, request, *args, **kwargs):
         """
-            Регистрация пользователя.
+            Аутентификация пользователя.
             Сперва проходит проверка на корректность otp, если он верен, регистрация проходит дальше.
             Если пользователь с таким email уже есть, возвращает его, иначе нет
             Body:
