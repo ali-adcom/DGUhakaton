@@ -1,6 +1,7 @@
 from django.db import models
 
-from users.models import Families, User
+from users.models import Family, User
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=64)
@@ -26,11 +27,12 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag, related_name='tasks', verbose_name='Теги')
     complexity = models.IntegerField(choices=COMPLEXITY_CHOICES, verbose_name='Сложность задачи')
     scope = models.CharField(max_length=20, choices=SCOPE_CHOICES, verbose_name='Область видимости')
-    family = models.ForeignKey(Families, on_delete=models.CASCADE, verbose_name='Семья')
+    family = models.ForeignKey(Family, on_delete=models.CASCADE, verbose_name='Семья')
     is_completed = models.BooleanField(default=False, verbose_name='Завершено')
     recommend_time_in_min = models.SmallIntegerField(verbose_name='Рекомендуемое время в минутах')
     created_datetime = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     closed_datetime = models.DateTimeField(null=True, blank=True, verbose_name='Дата завершения')
+    closed_by = models.ForeignKey(User, null=True, blank=True, verbose_name='Кто закрыл')
 
     def __str__(self):
         return self.title
