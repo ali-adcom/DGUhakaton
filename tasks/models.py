@@ -42,6 +42,13 @@ class Task(models.Model):
         verbose_name_plural = 'Задачи'
 
 
+class TaskPattern(Task): 
+    family = None
+    class Meta: 
+        verbose_name = 'Шаблон задачи'
+        verbose_name_plural = 'Шаблоны задач'
+
+
 class TaskReportFile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)

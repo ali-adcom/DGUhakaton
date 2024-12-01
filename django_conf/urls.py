@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from common.views import get_main_page
 from users.urls import users_router, families_router
 from tasks.urls import tasks_router
 
@@ -23,4 +24,5 @@ urlpatterns = [
     path('api/v1/users/', include(users_router.urls)),
     path('api/v1/families/', include(families_router.urls)),
     path('api/v1/tasks/', include(tasks_router.urls)),
+    path('api/v1/get_main_page/', get_main_page, name='get_main_page'),
 ]
