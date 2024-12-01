@@ -7,10 +7,14 @@ from tasks.serializers import TaskSerializer
 
 
 @api_view(['GET']) 
-def get_main_page(request): 
+def get_main_page(request):
+    if not request.user.is_authenticated:
+        
+        return Response('Вы не авторизованы', status=status.HTTP_401_UNAUTHORIZED)
+    
     user = request.user 
     today = datetime.today().date()
-    daily_tasks = Task.objects.filter(family=user.family, created_datetime__date=today)
+    daily_tasks = Task.objects.filter(family=user.family, created_datetime__date=today, scope='rating')
     tasks_serializer = TaskSerializer(daily_tasks, many=True)
     completed_tasks = Task.objects.filter(closed_by=user).count()
     user_score = { 'username': user.first_name + ' ' + user.last_name, 
