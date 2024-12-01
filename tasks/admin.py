@@ -20,6 +20,6 @@ class TaskAdmin(admin.ModelAdmin):
 
 @admin.register(TaskReportFile)
 class TaskReportFileAdmin(admin.ModelAdmin):
-    list_display = ('task', 'user', 'image')
+    list_display = ('task', 'user', 'file_url')
     search_fields = ('task__title', 'user__username')
 

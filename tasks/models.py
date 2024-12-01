@@ -32,7 +32,7 @@ class Task(models.Model):
     recommend_time_in_min = models.SmallIntegerField(verbose_name='Рекомендуемое время в минутах')
     created_datetime = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     closed_datetime = models.DateTimeField(null=True, blank=True, verbose_name='Дата завершения')
-    closed_by = models.ForeignKey(User, null=True, blank=True, verbose_name='Кем завершена')
+    closed_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, verbose_name='Кем завершена')
 
     def __str__(self):
         return self.title
