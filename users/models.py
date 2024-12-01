@@ -1,10 +1,8 @@
-from django.contrib.auth.models import AbstractBaseUser, AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, AbstractUser, BaseUserManager
 from django.db import models
 
 from users.validators import validate_age
 
-
-from django.contrib.auth.models import BaseUserManager
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -25,8 +23,7 @@ class UserManager(BaseUserManager):
     def get_by_natural_key(self, email):
         return self.get(email=email)
 
-
-
+      
 class Family(models.Model):
     title = models.CharField(max_length=64, verbose_name='Название')
     avatar = models.CharField(max_length=256, null=True, blank=True, verbose_name='Аватар')
