@@ -33,7 +33,6 @@ class Family(models.Model):
     admin = models.OneToOneField(
         'User', on_delete=models.CASCADE, related_name='admin_family', verbose_name='Администратор'
     )
-    rating = models.SmallIntegerField(default=0, verbose_name='Количество баллов')
 
     def __str__(self):
         return self.title
