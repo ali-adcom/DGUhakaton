@@ -4,15 +4,12 @@ from django.db import models
 from users.validators import validate_age
 
 
-
-
 class Family(models.Model):
     title = models.CharField(max_length=64, verbose_name='Название')
     avatar = models.CharField(max_length=256, null=True, blank=True, verbose_name='Аватар')
     admin = models.OneToOneField(
         'User', on_delete=models.CASCADE, related_name='admin_family', verbose_name='Администратор'
     )
-    rating = models.SmallIntegerField(verbose_name='Количество баллов')
 
     def __str__(self):
         return self.title
