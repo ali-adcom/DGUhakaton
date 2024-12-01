@@ -9,12 +9,18 @@ from .models import Task
 from .serializers import TaskSerializer
 
 
-class TaskViewSet(GenericViewSet, CreateModelMixin, DestroyModelMixin, UpdateModelMixin, RetrieveModelMixin, ListModelMixin):
+class TaskViewSet(
+    CreateModelMixin, 
+    DestroyModelMixin, 
+    UpdateModelMixin, 
+    RetrieveModelMixin, 
+    GenericViewSet
+):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     
     
-    @action(detail=True, methods=['POST'], url_path='complete', serializer_class=TaskSerializer)
+    @action(detail=True, methods=['POST'], url_path='complete')
     def complete_task(self, request, *args, **kwargs):
         task = self.get_object()
         
