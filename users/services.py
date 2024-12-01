@@ -1,13 +1,11 @@
 from django.core.cache import cache
-import random
-import string
+
+from common.services import generate_random_phrase
 from config import OTP_TTL_IN_SEC, OTP_LENGTH
 
 
 def generate_otp():
-    chars = string.ascii_letters + string.digits
-    otp = ''.join(random.choice(chars) for _ in range(OTP_LENGTH))
-    return otp
+    return generate_random_phrase(OTP_LENGTH)
 
 
 def get_otp_for_email(email: str) -> str:
@@ -26,3 +24,13 @@ def check_otp(email: str, otp: str) -> bool:
     if not source_otp:
         return False
     return otp == source_otp
+
+
+def generate_family_invite_code(family_id, user_id) -> str:
+    family_hex = hex(family_id)[2:7]
+    user_hex = hex(user_id)[2:7]
+    random_chars = generate_random_phrase(6)
+
+    invite_code = family_hex + user_hex + random_chars
+
+    return invite_code

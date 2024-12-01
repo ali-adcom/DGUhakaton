@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 
+from users.validators import validate_age
+
 
 class Family(models.Model):
     title = models.CharField(max_length=64, verbose_name='Название')
@@ -15,7 +17,6 @@ class Family(models.Model):
     class Meta:
         verbose_name = 'Семья'
         verbose_name_plural = 'Семьи'
-        ordering = ['title']
 
 
 class User(AbstractBaseUser):
@@ -38,7 +39,7 @@ class User(AbstractBaseUser):
         Family, on_delete=models.SET_NULL, null=True, blank=True, related_name='members', verbose_name='Семья'
     )
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES, verbose_name='Пол')
-    age = models.SmallIntegerField(verbose_name='Возраст')
+    age = models.SmallIntegerField(verbose_name='Возраст', validators=[validate_age])
 
     USERNAME_FIELD = 'email'
 
@@ -51,5 +52,6 @@ class User(AbstractBaseUser):
 
 
 class FamilyInviteCode(models.Model):
-    code = models.CharField(max_length=16, verbose_name='Код')
+    code = models.CharField(max_length=16, unique=True, verbose_name='Код')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    family = models.ForeignKey(Family, on_delete=models.CASCADE, verbose_name='Семья')
