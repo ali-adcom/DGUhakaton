@@ -1,12 +1,16 @@
 from django.contrib import admin
-from .models import Users, Families
 
-@admin.register(Families)
+from users.models import User, Family
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'role', 'family')
+    list_filter = ('role', 'family')
+    search_fields = ('username', 'first_name', 'last_name', 'family__title')
+
+
+@admin.register(Family)
 class FamilyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
-
-@admin.register(Users)
-class UsersAdmin(admin.ModelAdmin):
-    list_display = ('id', 'first_name', 'last_name', 'kind', 'family')
-    list_filter = ('kind', 'family')
-    search_fields = ('first_name', 'last_name', 'family__name')
+    list_display = ('title', 'admin')
+    search_fields = ('title',)
