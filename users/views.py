@@ -10,7 +10,9 @@ from common.serializers import EmailSerializer
 from users.models import User, FamilyInviteCode, Family
 from users.serializers import UserSerializer, UserSignUpSerializer, FamilySerializer, FamilyCreateSerializer, \
     FamilyMemberCreateSerializer
-from users.services import get_otp_for_email, check_otp, generate_family_invite_code, send_otp_mail
+
+from users.services import get_otp_for_email, check_otp, generate_family_invite_code, send_otp_email
+
 
 
 class UserViewSet(
@@ -41,7 +43,9 @@ class UserViewSet(
             return Response(data='Email не указан', status=status.HTTP_400_BAD_REQUEST)
 
         otp = get_otp_for_email(email)
-        send_otp_mail(request, otp, email)
+
+        send_otp_email(email, otp)
+
         return Response(f'otp успешно отправлен {otp}')
 
     @action(detail=False, methods=['POST'], url_path='auth/login', serializer_class=UserSignUpSerializer)

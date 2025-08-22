@@ -15,7 +15,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_filter = ('complexity', 'scope', 'family', 'is_completed')
     search_fields = ('title', 'tags__title', 'family__name')
     autocomplete_fields = ('tags', 'family')
-    readonly_fields = ('closed_datetime', 'created_datetime')
+    readonly_fields = ('closed_datetime', 'created_datetime', 'closed_by')
 
 
 @admin.register(TaskReportFile)

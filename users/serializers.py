@@ -37,6 +37,14 @@ class FamilySerializer(serializers.ModelSerializer):
         read_only_fields = ('admin',)
 
 
+class FamilyRatingSerializer(serializers.ModelSerializer):
+    total_rating = serializers.IntegerField(read_only=True)
+    class Meta:
+        model = Family
+        fields = ('id', 'title', 'avatar', 'admin', 'total_rating')
+        read_only_fields = ('admin',)
+
+
 class FamilyMemberCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

@@ -17,18 +17,17 @@ class S3Client:
         self.session = get_session()
     
     def get_client(self):
-        with self.session.create_client("s3", **self.config) as client:
-            yield client
+        return self.session.create_client("s3", **self.config)
     
     def upload_file(
             self,
             file_path: str,
     ):
-        object_name = file_path.split("/")[-1]  # /users/artem/cat.jpg
-        with self.get_client() as client:
-            with open(file_path, "rb") as file:
-                client.put_object(
-                    Bucket=self.bucket_name,
-                    Key=object_name,
-                    Body=file,
-                )
+        object_name = file_path.split("/")[-1]
+        client = self.get_client()
+        with open(file_path, "rb") as file:
+            client.put_object(
+                Bucket=self.bucket_name,
+                Key=object_name,
+                Body=file,
+            )
